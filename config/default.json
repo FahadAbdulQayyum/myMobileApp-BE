@@ -1,0 +1,5 @@
+{
+    "mongoURIX": "mongodb+srv://hellothere:618260@contactmanager.ryu0r.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    "mongoURI": "mongodb+srv://fahad:fahad@contactmanager.abu8h.mongodb.net/?retryWrites=true&w=majority",
+    "jwtSecret": "secret"
+}
