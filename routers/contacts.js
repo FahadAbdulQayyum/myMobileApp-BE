@@ -12,7 +12,7 @@ const Contact = require('../models/Contact');
 // @desc    Get all the user's contacts
 // @access  Private
 router.get('/',
-    // auth,
+    auth,
     async (req, res) => {
         try {
             const contacts = await Contact.find({ user: req.user.id }).sort({
@@ -29,41 +29,41 @@ router.get('/',
 // @desc    Add a new contact
 // @access  Private
 router.post('/', [
-    // router.post('/', [auth, [
-    check('name', 'Name is required').not().isEmpty()
-    // ]], async (req, res) => {
-], async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() })
-    }
+    router.post('/', [auth, [
+        check('name', 'Name is required').not().isEmpty()
+    ]], async (req, res) => {
+        // ], async (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() })
+        }
 
-    // const { name, email, phone, type } = req.body;
-    const { name, number, gender } = req.body;
+        // const { name, email, phone, type } = req.body;
+        const { name, number, gender } = req.body;
 
-    try {
-        const newContact = new Contact({
-            name,
-            number,
-            gender,
-            user: req.user.id
-        })
+        try {
+            const newContact = new Contact({
+                name,
+                number,
+                gender,
+                user: req.user.id
+            })
 
-        const contact = await newContact.save();
+            const contact = await newContact.save();
 
-        res.json(contact);
+            res.json(contact);
 
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server Error');
-    }
-});
+        } catch (err) {
+            console.error(err.message);
+            res.status(500).send('Server Error');
+        }
+    });
 
 // @route   PUT api/contacts/:id
 // @desc    Update a contact
 // @access  Private
 router.put('/:id',
-    // auth,
+    auth,
     async (req, res) => {
 
         const { name, email, phone, type } = req.body;
@@ -103,7 +103,7 @@ router.put('/:id',
 // @desc    Delete a contact
 // @access  Private
 router.delete('/:id',
-    // auth,
+    auth,
     async (req, res) => {
         try {
             let contact = await Contact.findById(req.params.id);
